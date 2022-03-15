@@ -14,6 +14,7 @@ const kanaDisplay = document.getElementById("kana-display");
 let kanaList = randomizeOrder(hiragana);
 kanaDisplay.innerText = kanaList[0];
 
+let input = "";
 const inputDisplay = document.getElementById("key-input");
 document.addEventListener("keydown", event => {
     const keyCode = event.key.codePointAt(0);
@@ -21,5 +22,10 @@ document.addEventListener("keydown", event => {
     const hasModifier = event.shiftKey || event.ctrlKey || event.metaKey;
     if (isLowerAlpha && !hasModifier && !event.repeat) {
         console.log(`New key: ${event.key}`);
+        input += event.key;
+    } else if (event.key === "Backspace") {
+        input = input.substring(0, input.length - 1);
     }
+
+    inputDisplay.innerText = input;
 });
