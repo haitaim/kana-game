@@ -18,12 +18,15 @@ function checkInput(input, currentKana) {
 }
 
 const inputDisplay = document.getElementById("key-input");
+const results = document.getElementById("results");
 
 class Game {
     constructor(kana) {
         this.#kanaList = shuffleKana(kana);
         this.#currentKana = this.#kanaList[0];
 
+        results.style.visibility = "hidden";
+        results.children[1].innerHTML = "";
         kanaDisplay.innerText = this.#currentKana;
         document.addEventListener("keydown", this.#keyProcessor);
     }
@@ -34,18 +37,32 @@ class Game {
             return;
         } else if (correct) {
             ++this.#kanaListIndex;
-            this.#currentKana = this.#kanaList[this.#kanaListIndex];
-            kanaDisplay.innerText = this.#currentKana;
         } else if (!this.#incorrectKana.includes(this.#currentKana)) {
             this.#incorrectKana.push(this.#currentKana);
         }
 
         this.#input = "";
         inputDisplay.innerText = this.#input;
+
+        if (this.#kanaListIndex === this.#kanaList.length) {
+            this.endGame();
+        } else {
+            this.#currentKana = this.#kanaList[this.#kanaListIndex];
+            kanaDisplay.innerText = this.#currentKana;
+        }
     }
 
     endGame() {
         document.removeEventListener("keydown", this.#keyProcessor);
+
+        const incorrectList = results.children[1];
+        for (const kana of this.#incorrectKana) {
+            const listElement = document.createElement("li");
+            listElement.innerText = kana;
+            incorrectList.appendChild(listElement);
+        }
+
+        results.style.visibility = "visible";
     }
 
     #kanaList;
