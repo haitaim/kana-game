@@ -1,4 +1,17 @@
 const hiragana = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん";
+const kanaRomanization = [
+    "a", "i", "u", "e", "o",
+    "ka", "ki", "ku", "ke", "ko",
+    "sa", "si", "su", "se", "so",
+    "ta", "ti", "tu", "te", "to",
+    "na", "ni", "nu", "ne", "no",
+    "ha", "hi", "hu", "he", "ho",
+    "ma", "mi", "mu", "me", "mo",
+    "ya", "yu", "yo",
+    "ra", "ri", "ru", "re", "ro",
+    "wa", "wo",
+    "n"
+];
 
 function randomizeOrder(kanaList) {
     const randomizedList = Array.from(kanaList);
@@ -12,6 +25,7 @@ function randomizeOrder(kanaList) {
 
 const kanaDisplay = document.getElementById("kana-display");
 let kanaList = randomizeOrder(hiragana);
+let listIndex = 0;
 kanaDisplay.innerText = kanaList[0];
 
 let input = "";
@@ -23,9 +37,33 @@ document.addEventListener("keydown", event => {
     if (isLowerAlpha && !hasModifier && !event.repeat) {
         console.log(`New key: ${event.key}`);
         input += event.key;
+        inputDisplay.innerText = input;
+        processInput();
     } else if (event.key === "Backspace") {
         input = input.substring(0, input.length - 1);
+        inputDisplay.innerText = input;
+    }
+});
+
+function processInput() {
+    let correct = checkRomanization();
+    if (input.length === 1 && !correct) {
+        return;
+    } else if (correct) {
+        ++listIndex;
+        kanaDisplay.innerText = kanaList[listIndex];
     }
 
+    input = "";
     inputDisplay.innerText = input;
-});
+}
+
+function checkRomanization() {
+    const currentKana = kanaList[listIndex];
+    if (currentKana === "を") {
+        return input === "o" || input === "wo";
+    } else {
+        const kanaIndex = hiragana.search(currentKana);
+        return input === kanaRomanization[kanaIndex];
+    }
+}
