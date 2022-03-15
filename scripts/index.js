@@ -26,6 +26,7 @@ function randomizeOrder(kanaList) {
 const kanaDisplay = document.getElementById("kana-display");
 let kanaList = randomizeOrder(hiragana);
 let listIndex = 0;
+let incorrectKana = [];
 kanaDisplay.innerText = kanaList[0];
 
 let input = "";
@@ -52,6 +53,8 @@ function processInput() {
     } else if (correct) {
         ++listIndex;
         kanaDisplay.innerText = kanaList[listIndex];
+    } else if (!incorrectKana.includes(kanaList[listIndex])) {
+        incorrectKana.push(kanaList[listIndex]);
     }
 
     input = "";
