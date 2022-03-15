@@ -1,6 +1,8 @@
-let gameState = new Game(hiragana);
+let game = new Game(hiragana);
+game.start();
 
 const newGameButton = document.querySelector("#results button");
 newGameButton.addEventListener("click", event => {
-    gameState = new Game(hiragana);
+    game = new Game(hiragana);
+    game.start();
 });

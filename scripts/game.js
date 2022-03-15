@@ -24,11 +24,28 @@ class Game {
     constructor(kana) {
         this.#kanaList = shuffleKana(kana);
         this.#currentKana = this.#kanaList[0];
+    }
 
+    start() {
         results.style.visibility = "hidden";
         results.children[1].innerHTML = "";
         kanaDisplay.innerText = this.#currentKana;
         document.addEventListener("keydown", this.#keyProcessor);
+    }
+
+    end() {
+        document.removeEventListener("keydown", this.#keyProcessor);
+    }
+
+    viewResults() {
+        const incorrectList = results.children[1];
+        for (const kana of this.#incorrectKana) {
+            const listElement = document.createElement("li");
+            listElement.innerText = kana;
+            incorrectList.appendChild(listElement);
+        }
+
+        results.style.visibility = "visible";
     }
 
     #processInput() {
@@ -45,24 +62,12 @@ class Game {
         inputDisplay.innerText = this.#input;
 
         if (this.#kanaListIndex === this.#kanaList.length) {
-            this.endGame();
+            this.end();
+            this.viewResults();
         } else {
             this.#currentKana = this.#kanaList[this.#kanaListIndex];
             kanaDisplay.innerText = this.#currentKana;
         }
-    }
-
-    endGame() {
-        document.removeEventListener("keydown", this.#keyProcessor);
-
-        const incorrectList = results.children[1];
-        for (const kana of this.#incorrectKana) {
-            const listElement = document.createElement("li");
-            listElement.innerText = kana;
-            incorrectList.appendChild(listElement);
-        }
-
-        results.style.visibility = "visible";
     }
 
     #kanaList;
