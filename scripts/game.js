@@ -27,10 +27,10 @@ class Game {
     }
 
     start() {
-        results.style.visibility = "hidden";
-        results.children[1].innerHTML = "";
         kanaDisplay.innerText = this.#currentKana;
         document.addEventListener("keydown", this.#keyProcessor);
+        document.getElementById("game").classList.replace("hidden", "visible");
+        results.classList.replace("visible", "hidden");
     }
 
     end() {
@@ -39,13 +39,16 @@ class Game {
 
     viewResults() {
         const incorrectList = results.children[1];
+        incorrectList.innerHTML = "";
         for (const kana of this.#incorrectKana) {
             const listElement = document.createElement("li");
             listElement.innerText = kana;
             incorrectList.appendChild(listElement);
         }
 
-        results.style.visibility = "visible";
+        results.classList.replace("hidden", "visible");
+        document.getElementById("game").classList.replace("visible", "hidden");
+
     }
 
     #processInput() {
