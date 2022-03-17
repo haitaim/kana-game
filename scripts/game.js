@@ -1,8 +1,13 @@
 function shuffleKana(kana) {
+    // From example on MDN Math.random() article
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
     const shuffledKana = Array.from(kana);
     // Modern Fisher-Yates shuffle algorithm as described on Wikipedia
     for (let i = 0; i < shuffledKana.length - 2; ++i) {
-        const j = Math.floor(Math.random() * shuffledKana.length);
+        const j = getRandomInt(i, shuffledKana.length);
         [shuffledKana[i], shuffledKana[j]] = [shuffledKana[j], shuffledKana[i]];
     }
     return shuffledKana;
