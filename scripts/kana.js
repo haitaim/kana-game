@@ -4,14 +4,14 @@ const hiragana = "あいうえおかきくけこさしすせそたちつてと�
 const kanaRomanization = [
     "a", "i", "u", "e", "o",
     "ka", "ki", "ku", "ke", "ko",
-    "sa", "si", "su", "se", "so",
-    "ta", "ti", "tu", "te", "to",
+    "sa", ["si", "shi"], "su", "se", "so",
+    "ta", ["ti", "chi"], ["tu", "tsu"], "te", "to",
     "na", "ni", "nu", "ne", "no",
-    "ha", "hi", "hu", "he", "ho",
+    "ha", "hi", ["hu", "fu"], "he", "ho",
     "ma", "mi", "mu", "me", "mo",
     "ya", "yu", "yo",
     "ra", "ri", "ru", "re", "ro",
-    "wa", "wo",
+    "wa", ["o", "wo"],
     "n"
 ];
 

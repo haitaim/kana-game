@@ -9,11 +9,14 @@ function shuffleKana(kana) {
 }
 
 function checkInput(input, currentKana) {
-    if (currentKana === "を") {
-        return input === "o" || input === "wo";
-    } else {
-        const kanaIndex = hiragana.search(currentKana);
-        return input === kanaRomanization[kanaIndex];
+    const kanaIndex = hiragana.search(currentKana);
+    const answer = kanaRomanization[kanaIndex]
+    switch (typeof(answer)) {
+        case "object":
+            return answer.includes(input);
+        case "string":
+        default:
+            return answer === input;
     }
 }
 
@@ -53,7 +56,8 @@ class Game {
 
     #processInput() {
         const correct = checkInput(this.#input, this.#currentKana);
-        if (this.#input.length === 1 && !correct) {
+        const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
+        if ((this.#input.length === 1 && !correct) || possibleHepburn) {
             return;
         } else if (correct) {
             ++this.#kanaListIndex;
