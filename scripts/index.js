@@ -1,11 +1,17 @@
-const settings = new GameSettings(hiragana);
+const settings = new GameSettings(hiragana, 46);
 let game = new Game(settings);
 game.start();
 
-const kanaSettings = document.getElementById("kana-settings");
-kanaSettings.addEventListener("change", event => {
+document.getElementById("kana-settings").addEventListener("change", event => {
     game.end();
     settings.selectedKana = event.target.value === "hiragana" ? hiragana : katakana;
+    game = new Game(settings);
+    game.start();
+});
+
+document.getElementById("number-settings").addEventListener("change", event => {
+    game.end();
+    settings.numberOfKana = parseInt(event.target.value, 10);
     game = new Game(settings);
     game.start();
 });

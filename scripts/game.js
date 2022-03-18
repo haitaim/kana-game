@@ -31,7 +31,7 @@ const results = document.getElementById("results");
 class Game {
     constructor(gameSettings) {
         this.#selectedKana = gameSettings.selectedKana;
-        this.#kanaList = shuffleKana(this.#selectedKana);
+        this.#kanaList = shuffleKana(this.#selectedKana).slice(0, gameSettings.numberOfKana);
         this.#currentKana = this.#kanaList[0];
     }
 
@@ -112,9 +112,11 @@ class Game {
 }
 
 class GameSettings {
-    constructor(selectedKana) {
+    constructor(selectedKana, numberOfKana) {
         this.selectedKana = selectedKana;
+        this.numberOfKana = numberOfKana;
     }
 
     selectedKana;
+    numberOfKana;
 }
