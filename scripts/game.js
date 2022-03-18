@@ -13,15 +13,11 @@ function shuffleKana(kana) {
     return shuffledKana;
 }
 
-function checkInput(input, currentKana, selectedKana) {
-    const kanaIndex = selectedKana.search(currentKana);
-    const answer = kanaRomanization[kanaIndex]
-    switch (typeof(answer)) {
-        case "object":
-            return answer.includes(input);
-        case "string":
-        default:
-            return answer === input;
+function checkInput(input, answer) {
+    if (typeof(answer) === "object") {
+        return answer.includes(input);
+    } else {
+        return answer === input;
     }
 }
 
@@ -30,8 +26,11 @@ const results = document.getElementById("results");
 
 class Game {
     constructor(gameSettings) {
-        this.#selectedKana = gameSettings.selectedKana;
-        this.#kanaList = shuffleKana(this.#selectedKana).slice(0, gameSettings.numberOfKana);
+        const selectedKana = gameSettings.selectedKana;
+        for (let i = 0; i < selectedKana.length; ++i) {
+            this.#romanizationMap.set(selectedKana[i], kanaRomanization[i]);
+        }
+        this.#kanaList = shuffleKana(selectedKana).slice(0, gameSettings.numberOfKana);
         this.#currentKana = this.#kanaList[0];
     }
 
@@ -61,7 +60,8 @@ class Game {
     }
 
     #processInput() {
-        const correct = checkInput(this.#input, this.#currentKana, this.#selectedKana);
+        const answer = this.#romanizationMap.get(this.#currentKana);
+        const correct = checkInput(this.#input, answer);
         if (correct) {
             ++this.#kanaListIndex;
         } else {
@@ -91,7 +91,7 @@ class Game {
 
     #kanaList;
     #currentKana;
-    #selectedKana;
+    #romanizationMap = new Map();
     #kanaListIndex = 0;
     #input = "";
     #incorrectKana = [];
