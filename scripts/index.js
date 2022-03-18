@@ -12,6 +12,6 @@ kanaSettings.addEventListener("change", event => {
 
 const newGameButton = document.querySelector("#results button");
 newGameButton.addEventListener("click", () => {
-    game = new Game(selectedKana);
+    game = new Game(settings);
     game.start();
 });
