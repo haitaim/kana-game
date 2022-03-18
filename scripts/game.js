@@ -62,18 +62,24 @@ class Game {
 
     #processInput() {
         const correct = checkInput(this.#input, this.#currentKana, this.#selectedKana);
-        const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
-        if ((this.#input.length === 1 && !correct) || possibleHepburn) {
-            return;
-        } else if (correct) {
+        if (correct) {
             ++this.#kanaListIndex;
-        } else if (!this.#incorrectKana.includes(this.#currentKana)) {
-            this.#incorrectKana.push(this.#currentKana);
+        } else {
+            const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
+            const isVowel = ["a", "i", "u", "e", "o",].includes(this.#input);
+            if ((!isVowel && this.#input.length === 1) || possibleHepburn) {
+                // Input considered still in progress
+                return;
+            } else if (!this.#incorrectKana.includes(this.#currentKana)) {
+                // Input considered incorrect
+                this.#incorrectKana.push(this.#currentKana);
+            }
         }
 
         this.#input = "";
         inputDisplay.innerText = this.#input;
 
+        // Determine end of game
         if (this.#kanaListIndex === this.#kanaList.length) {
             this.end();
             this.viewResults();
