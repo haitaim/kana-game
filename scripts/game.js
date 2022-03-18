@@ -13,8 +13,8 @@ function shuffleKana(kana) {
     return shuffledKana;
 }
 
-function checkInput(input, currentKana) {
-    const kanaIndex = hiragana.search(currentKana);
+function checkInput(input, currentKana, selectedKana) {
+    const kanaIndex = selectedKana.search(currentKana);
     const answer = kanaRomanization[kanaIndex]
     switch (typeof(answer)) {
         case "object":
@@ -29,8 +29,9 @@ const inputDisplay = document.getElementById("key-input");
 const results = document.getElementById("results");
 
 class Game {
-    constructor(kana) {
-        this.#kanaList = shuffleKana(kana);
+    constructor(gameSettings) {
+        this.#selectedKana = gameSettings.selectedKana;
+        this.#kanaList = shuffleKana(this.#selectedKana);
         this.#currentKana = this.#kanaList[0];
     }
 
@@ -60,7 +61,7 @@ class Game {
     }
 
     #processInput() {
-        const correct = checkInput(this.#input, this.#currentKana);
+        const correct = checkInput(this.#input, this.#currentKana, this.#selectedKana);
         const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
         if ((this.#input.length === 1 && !correct) || possibleHepburn) {
             return;
@@ -84,6 +85,7 @@ class Game {
 
     #kanaList;
     #currentKana;
+    #selectedKana;
     #kanaListIndex = 0;
     #input = "";
     #incorrectKana = [];
@@ -101,4 +103,12 @@ class Game {
             inputDisplay.innerText = this.#input;
         }
     };
+}
+
+class GameSettings {
+    constructor(selectedKana) {
+        this.selectedKana = selectedKana;
+    }
+
+    selectedKana;
 }
