@@ -32,10 +32,11 @@ class Game {
         }
         this.#kanaList = shuffleKana(selectedKana).slice(0, gameSettings.numberOfKana);
         this.#currentKana = this.#kanaList[0];
+        this.#kanaDisplay = new KanaDisplay(this.#kanaList);
     }
 
     start() {
-        kanaDisplay.innerText = this.#currentKana;
+        this.#kanaDisplay.start();
         document.addEventListener("keydown", this.#keyProcessor);
         document.getElementById("game").classList.replace("hidden", "visible");
         results.classList.replace("visible", "hidden");
@@ -83,14 +84,15 @@ class Game {
         if (this.#kanaListIndex === this.#kanaList.length) {
             this.end();
             this.viewResults();
-        } else {
+        } else if (correct) {
             this.#currentKana = this.#kanaList[this.#kanaListIndex];
-            kanaDisplay.innerText = this.#currentKana;
+            this.#kanaDisplay.increment();
         }
     }
 
     #kanaList;
     #currentKana;
+    #kanaDisplay;
     #romanizationMap = new Map();
     #kanaListIndex = 0;
     #input = "";
