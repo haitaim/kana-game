@@ -18,6 +18,7 @@ document.getElementById("number-settings").addEventListener("change", event => {
 
 const newGameButton = document.querySelector("#results button");
 newGameButton.addEventListener("click", () => {
+    newGameButton.setAttribute("disabled", "disabled");
     game = new Game(settings);
     game.start();
 });

@@ -56,7 +56,7 @@ class Game {
 
         results.classList.replace("hidden", "visible");
         document.getElementById("game").classList.replace("visible", "hidden");
-
+        document.querySelector("#results button").removeAttribute("disabled");
     }
 
     #processInput() {
