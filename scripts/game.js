@@ -21,7 +21,6 @@ function checkInput(input, answer) {
     }
 }
 
-const inputDisplay = document.getElementById("key-input");
 const results = document.getElementById("results");
 
 class Game {
@@ -37,6 +36,7 @@ class Game {
 
     start() {
         this.#kanaDisplay.start();
+        this.#keyDisplay.start();
         document.addEventListener("keydown", this.#keyProcessor);
         document.getElementById("game").classList.replace("hidden", "visible");
         results.classList.replace("visible", "hidden");
@@ -62,8 +62,8 @@ class Game {
 
     #processInput() {
         const answer = this.#romanizationMap.get(this.#currentKana);
-        const correct = checkInput(this.#input, answer);
-        if (correct) {
+        const isCorrect = checkInput(this.#input, answer);
+        if (isCorrect) {
             ++this.#kanaListIndex;
         } else {
             const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
@@ -78,21 +78,24 @@ class Game {
         }
 
         this.#input = "";
-        inputDisplay.innerText = this.#input;
 
         // Determine end of game
         if (this.#kanaListIndex === this.#kanaList.length) {
             this.end();
             this.viewResults();
-        } else if (correct) {
+        } else if (isCorrect) {
             this.#currentKana = this.#kanaList[this.#kanaListIndex];
             this.#kanaDisplay.increment();
+            this.#keyDisplay.increment(isCorrect);
+        } else {
+            this.#keyDisplay.increment(isCorrect);
         }
     }
 
     #kanaList;
     #currentKana;
     #kanaDisplay;
+    #keyDisplay = new KeyDisplay();
     #romanizationMap = new Map();
     #kanaListIndex = 0;
     #input = "";
@@ -104,11 +107,11 @@ class Game {
         if (isLowerAlpha && !hasModifier && !event.repeat) {
             console.log(`New key: ${event.key}`);
             this.#input += event.key;
-            inputDisplay.innerText = this.#input;
+            this.#keyDisplay.changeInput(this.#input);
             this.#processInput();
         } else if (event.key === "Backspace") {
             this.#input = this.#input.substring(0, this.#input.length - 1);
-            inputDisplay.innerText = this.#input;
+            this.#keyDisplay.changeInput(this.#input);
         }
     };
 }

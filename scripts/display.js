@@ -1,7 +1,6 @@
 class KanaDisplay {
     constructor(kanaList) {
         this.#kanaList = kanaList;
-        this.#characters = this.#kanaDisplay.children;
     }
 
     start() {
@@ -21,7 +20,35 @@ class KanaDisplay {
     }
 
     #kanaList;
-    #characters;
     #kanaListIndex = 3;
     #kanaDisplay = document.getElementById("kana-display");
+    #characters = this.#kanaDisplay.children;
+}
+
+class KeyDisplay {   
+    start() {
+        this.#prompt.style.visibility = "visible";
+    }
+
+    increment(isCorrect) {
+        if (!isCorrect) {
+            this.#inputs.children[2].classList.add("incorrect");
+        }
+        this.#inputs.children[0].remove();
+        this.#inputs.appendChild(document.createElement("div"));
+    }
+
+    changeInput = (newInput) => {
+        this.#prompt.style.visibility = "hidden";
+        this.#inputs.children[2].innerText = newInput;
+        this.changeInput = this.#displayInput;
+    };
+
+    #prompt = document.getElementById("prompt");
+    #inputs = document.getElementById("inputs");
+
+    #displayInput(newInput) {
+        this.#inputs.children[2].innerText = newInput;
+    }
+
 }
