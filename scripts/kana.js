@@ -14,3 +14,5 @@ const kanaRomanization = [
     "wa", ["o", "wo"],
     "n"
 ];
+
+const kanaDisplay = document.getElementById("kana-display");

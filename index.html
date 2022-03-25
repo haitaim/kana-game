@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="scripts/kana.js" defer></script>
-    <script src="scripts/display.js" defer></script>
     <script src="scripts/game.js" defer></script>
     <script src="scripts/index.js" defer></script>
     <link href="styles/styles.css" rel="stylesheet">
@@ -13,24 +12,11 @@
 <body>
     <h1>Kana Game Thing</h1>
     <div>
-        <div id="game">
-            <div id="kana-display">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div id="key-display">
-                <div id="prompt">Type to start</div>
-                <div id="inputs">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
+        <div id="game" class="hideable visible">
+            <div id="kana-display"></div>
+            <div id="key-input">Type to start</div>
         </div>
-        <div id="results">
+        <div id="results" class="hideable hidden">
             <h2>Incorrect</h2>
             <ul></ul>
             <button type="button" disabled>New Game</button>
