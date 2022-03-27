@@ -11,15 +11,16 @@
 </head>
 <body>
     <h1>Kana Game Thing</h1>
-    <div>
-        <div id="game" class="hideable visible">
-            <div id="kana-display"></div>
-            <div id="key-input">Type to start</div>
+    <div id="game">
+        <div id="kana-display"></div>
+        <div id="key-display">
+            <div id="prompt">Type to start</div>
+            <div id="input"></div>
         </div>
-        <div id="results" class="hideable hidden">
+        <div id="results">
             <h2>Incorrect</h2>
             <ul></ul>
-            <button type="button" disabled>New Game</button>
+            <button type="button" id="new-game" disabled>New Game</button>
         </div>
     </div>
     <section>

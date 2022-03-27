@@ -21,8 +21,10 @@ function checkInput(input, answer) {
     }
 }
 
-const inputDisplay = document.getElementById("key-input");
+const kanaDisplay = document.getElementById("kana-display");
+const inputDisplay = document.getElementById("key-display");
 const results = document.getElementById("results");
+const newGameButton = document.getElementById("new-game");
 
 class Game {
     constructor(gameSettings) {
@@ -37,8 +39,6 @@ class Game {
     start() {
         kanaDisplay.innerText = this.#currentKana;
         document.addEventListener("keydown", this.#keyProcessor);
-        document.getElementById("game").classList.replace("hidden", "visible");
-        results.classList.replace("visible", "hidden");
     }
 
     end() {
@@ -54,9 +54,7 @@ class Game {
             incorrectList.appendChild(listElement);
         }
 
-        results.classList.replace("hidden", "visible");
-        document.getElementById("game").classList.replace("visible", "hidden");
-        document.querySelector("#results button").removeAttribute("disabled");
+        newGameButton.removeAttribute("disabled");
     }
 
     #processInput() {
