@@ -14,15 +14,37 @@ function shuffleKana(kana) {
 }
 
 function checkInput(input, answer) {
-    if (typeof(answer) === "object") {
-        return answer.includes(input);
-    } else {
-        return answer === input;
+    const isCorrect = typeof(answer) === "object" ? answer.includes(input) : answer === input;
+    if (isCorrect) {
+        return "correct";
     }
+
+    const possibleHepburn = ["sh", "ch", "ts"].includes(input);
+    const isVowel = ["a", "i", "u", "e", "o",].includes(input);
+    if ((!isVowel && input.length === 1) || possibleHepburn) {
+        return "incomplete";
+    }
+
+    return "incorrect";
+}
+
+const keyDisplay = document.getElementById("key-display");
+function fadeAnswer(input, isCorrect) {
+    const inputDiv = document.createElement("div");
+    inputDiv.innerText = input;
+    inputDiv.classList.add("previous-input");
+    if (!isCorrect) {
+        inputDiv.classList.add("incorrect");
+    }
+    inputDiv.addEventListener("animationend", event => {
+        event.currentTarget.remove();
+    });
+    keyDisplay.appendChild(inputDiv);
 }
 
 const kanaDisplay = document.getElementById("kana-display");
-const inputDisplay = document.getElementById("key-display");
+const inputPrompt = document.getElementById("prompt");
+const inputDisplay = document.getElementById("input");
 const results = document.getElementById("results");
 const newGameButton = document.getElementById("new-game");
 
@@ -38,6 +60,9 @@ class Game {
 
     start() {
         kanaDisplay.innerText = this.#currentKana;
+        inputPrompt.style.visibility = "visible";
+        this.#promptVisible = true;
+        inputDisplay.innerText = "";
         document.addEventListener("keydown", this.#keyProcessor);
     }
 
@@ -59,41 +84,46 @@ class Game {
 
     #processInput() {
         const answer = this.#romanizationMap.get(this.#currentKana);
-        const correct = checkInput(this.#input, answer);
-        if (correct) {
-            ++this.#kanaListIndex;
-        } else {
-            const possibleHepburn = ["sh", "ch", "ts"].includes(this.#input);
-            const isVowel = ["a", "i", "u", "e", "o",].includes(this.#input);
-            if ((!isVowel && this.#input.length === 1) || possibleHepburn) {
-                // Input considered still in progress
+        switch (checkInput(this.#input, answer)) {
+            case "incomplete":
                 return;
-            } else if (!this.#incorrectKana.includes(this.#currentKana)) {
-                // Input considered incorrect
-                this.#incorrectKana.push(this.#currentKana);
-            }
-        }
-
-        this.#input = "";
-        inputDisplay.innerText = this.#input;
-
-        // Determine end of game
-        if (this.#kanaListIndex === this.#kanaList.length) {
-            this.end();
-            this.viewResults();
-        } else {
-            this.#currentKana = this.#kanaList[this.#kanaListIndex];
-            kanaDisplay.innerText = this.#currentKana;
+            case "correct": 
+                ++this.#kanaListIndex;
+                if (this.#kanaListIndex === this.#kanaList.length) {
+                    this.end();
+                    this.viewResults();
+                } else {
+                    this.#currentKana = this.#kanaList[this.#kanaListIndex];
+                    kanaDisplay.innerText = this.#currentKana;
+                    fadeAnswer(this.#input, true);
+                    this.#input = "";
+                    inputDisplay.innerText = this.#input;
+                }
+                break;
+            case "incorrect":
+            default:
+                if (!this.#incorrectKana.includes(this.#currentKana)) {
+                    this.#incorrectKana.push(this.#currentKana);
+                }
+                fadeAnswer(this.#input, false);
+                this.#input = "";
+                inputDisplay.innerText = this.#input;
         }
     }
 
     #kanaList;
     #currentKana;
+    #promptVisible;
     #romanizationMap = new Map();
     #kanaListIndex = 0;
     #input = "";
     #incorrectKana = [];
     #keyProcessor = event => {
+        if (this.#promptVisible) {
+            this.#promptVisible = false;
+            inputPrompt.style.visibility = "hidden";
+        }
+
         const keyCode = event.key.codePointAt(0);
         const isLowerAlpha = keyCode > 0x60 && keyCode < 0x7b;
         const hasModifier = event.shiftKey || event.ctrlKey || event.metaKey;
