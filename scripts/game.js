@@ -45,7 +45,7 @@ function fadeAnswer(input, isCorrect) {
 const kanaDisplay = document.getElementById("kana-display");
 const inputPrompt = document.getElementById("prompt");
 const inputDisplay = document.getElementById("input");
-const results = document.getElementById("results");
+const incorrectAnswers = document.getElementById("incorrect-answers");
 const newGameButton = document.getElementById("new-game");
 
 class Game {
@@ -71,14 +71,18 @@ class Game {
     }
 
     viewResults() {
-        const incorrectList = results.children[1];
-        incorrectList.innerHTML = "";
-        for (const kana of this.#incorrectKana) {
-            const listElement = document.createElement("li");
-            listElement.innerText = kana;
-            incorrectList.appendChild(listElement);
+        incorrectAnswers.innerHTML = "";
+        let list = document.createElement("ul");
+        for (const incorrect of this.#incorrectKana) {
+            if (list.childElementCount === 6) {
+                incorrectAnswers.appendChild(list);
+                list = document.createElement("ul");
+            }
+            const listItem = document.createElement("li");
+            listItem.innerText = incorrect;
+            list.appendChild(listItem);
         }
-
+        incorrectAnswers.appendChild(list);
         newGameButton.removeAttribute("disabled");
     }
 
