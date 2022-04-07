@@ -123,15 +123,15 @@ class Game {
     #input = "";
     #incorrectKana = [];
     #keyProcessor = event => {
-        if (this.#promptVisible) {
-            this.#promptVisible = false;
-            inputPrompt.style.visibility = "hidden";
-        }
-
         const keyCode = event.key.codePointAt(0);
         const isLowerAlpha = keyCode > 0x60 && keyCode < 0x7b;
         const hasModifier = event.shiftKey || event.ctrlKey || event.metaKey;
         if (isLowerAlpha && !hasModifier && !event.repeat) {
+            if (this.#promptVisible) {
+                this.#promptVisible = false;
+                inputPrompt.style.visibility = "hidden";
+            }
+
             console.log(`New key: ${event.key}`);
             this.#input += event.key;
             inputDisplay.innerText = this.#input;
