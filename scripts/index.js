@@ -65,7 +65,7 @@ document.getElementById("number-settings").addEventListener("change", event => {
 
 newGameButton.addEventListener("click", () => {
     newGameButton.blur();
-    newGameButton.setAttribute("disabled", "disabled");
+    newGameButton.setAttribute("disabled", "");
     game = new Game(settings);
     game.start();
 });
