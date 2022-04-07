@@ -79,7 +79,11 @@ class Game {
                 list = document.createElement("ul");
             }
             const listItem = document.createElement("li");
-            listItem.innerText = incorrect;
+            let romanization = this.#romanizationMap.get(incorrect);
+            romanization = typeof(romanization) === "string"
+                ? romanization
+                : romanization.join(", ");
+            listItem.innerText = `${incorrect}: ${romanization}`;
             list.appendChild(listItem);
         }
         incorrectAnswers.appendChild(list);
