@@ -1,3 +1,5 @@
+/* !! general */
+
 body {
     margin: 0;
     font-family: sans-serif;
@@ -12,15 +14,16 @@ h2 {
     text-align: center;
 }
 
+/* !! game */
+
 #game {
     position: relative;
+    margin-bottom: 4rem;
 }
 
 #main, #results {
-    transition-property: all;
-    transition-duration: 0.3s;
+    transition: all 0.4s;
 }
-
 
 .visible {
     visibility: visible;
@@ -31,6 +34,8 @@ h2 {
     visibility: hidden;
     opacity: 0;
 }
+
+/* !! main game display */
 
 #kana-display {
     position: absolute;
@@ -53,6 +58,8 @@ h2 {
     left: calc(50vw - 5rem);
 }
 
+/* !! key input */
+
 .previous-input {
     animation: fade-out 0.5s;
     opacity: 0;
@@ -72,6 +79,12 @@ h2 {
     }
 }
 
+/* !! results */
+
+#results {
+    text-align: center;
+}
+
 #incorrect-answers {
     display: flex;
     justify-content: center;
@@ -83,4 +96,22 @@ h2 {
     margin: 0 1.25em;
     padding-left: 0;
     list-style-type: none;
+    text-align: revert;
+}
+
+#new-game {
+    all: unset;
+    cursor: pointer;
+    padding: 0.5em;
+    background-color: gainsboro;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+#new-game:hover {
+    background-color: lavender;
 }
