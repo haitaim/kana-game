@@ -12,18 +12,20 @@
 <body>
     <h1>Kana Game Thing</h1>
     <div id="game">
-        <div id="kana-display"></div>
-        <div id="key-display">
-            <div id="prompt">Type to start</div>
-            <div id="input"></div>
+        <div id="main" class="visible">
+            <div id="kana-display"></div>
+            <div id="key-display">
+                <div id="prompt">Type to start</div>
+                <div id="input"></div>
+            </div>
         </div>
-        <div id="results">
+        <div id="results" class="hidden">
             <h2>Incorrect</h2>
             <div id="incorrect-answers"></div>
             <button type="button" id="new-game" disabled>New Game</button>
         </div>
     </div>
-    <section>
+    <section id="settings">
         <h2>Settings</h2>
         <div id="kana-settings">
             <label>Hiragana

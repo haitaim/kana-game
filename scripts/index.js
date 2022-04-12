@@ -44,28 +44,34 @@ let game = new Game(settings);
 game.start();
 
 document.getElementById("kana-settings").addEventListener("change", event => {
-    game.end();
     if (hasSessionStorage) {
         sessionStorage.setItem("kanaSetting", event.target.value);
     }
     settings.selectedKana = event.target.value === "hiragana" ? hiragana : katakana;
-    game = new Game(settings);
-    game.start();
 });
 
 document.getElementById("number-settings").addEventListener("change", event => {
-    game.end();
     if (hasSessionStorage) {
         sessionStorage.setItem("numberSetting", event.target.value);
     }
     settings.numberOfKana = parseInt(event.target.value, 10);
-    game = new Game(settings);
-    game.start();
 });
 
 newGameButton.addEventListener("click", () => {
     newGameButton.blur();
     newGameButton.setAttribute("disabled", "");
+    fadeInOut(results, mainGame);
     game = new Game(settings);
     game.start();
+});
+
+document.getElementById("settings").addEventListener("change", () => {
+    game.end();
+    game = new Game(settings);
+    fadeInOut(mainGame, mainGame);
+    function startGame() {
+        game.start()
+        mainGame.removeEventListener("transitionend", startGame);
+    }
+    mainGame.addEventListener("transitionend", startGame);
 });

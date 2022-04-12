@@ -8,8 +8,28 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    text-align: center;
+}
+
 #game {
     position: relative;
+}
+
+#main, #results {
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
 }
 
 #kana-display {
@@ -54,7 +74,8 @@ h1 {
 
 #incorrect-answers {
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
+    height: 8em;
     font-size: 1.1rem;
 }
 

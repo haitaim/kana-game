@@ -42,9 +42,20 @@ function fadeAnswer(input, isCorrect) {
     keyDisplay.appendChild(inputDiv);
 }
 
+function fadeInOut(fadeOutElement, fadeInElement) {
+    function startFadeIn() {
+        fadeInElement.classList.replace("hidden", "visible");
+        fadeOutElement.removeEventListener("transitionend", startFadeIn);
+    }
+    fadeOutElement.addEventListener("transitionend", startFadeIn);
+    fadeOutElement.classList.replace("visible", "hidden");
+}
+
 const kanaDisplay = document.getElementById("kana-display");
+const mainGame = document.getElementById("main");
 const inputPrompt = document.getElementById("prompt");
 const inputDisplay = document.getElementById("input");
+const results = document.getElementById("results");
 const incorrectAnswers = document.getElementById("incorrect-answers");
 const newGameButton = document.getElementById("new-game");
 
@@ -71,22 +82,8 @@ class Game {
     }
 
     viewResults() {
-        incorrectAnswers.innerHTML = "";
-        let list = document.createElement("ul");
-        for (const incorrect of this.#incorrectKana) {
-            if (list.childElementCount === 6) {
-                incorrectAnswers.appendChild(list);
-                list = document.createElement("ul");
-            }
-            const listItem = document.createElement("li");
-            let romanization = this.#romanizationMap.get(incorrect);
-            romanization = typeof(romanization) === "string"
-                ? romanization
-                : romanization.join(", ");
-            listItem.innerText = `${incorrect}: ${romanization}`;
-            list.appendChild(listItem);
-        }
-        incorrectAnswers.appendChild(list);
+        this.#createResults();
+        fadeInOut(mainGame, results);
         newGameButton.removeAttribute("disabled");
     }
 
@@ -117,6 +114,25 @@ class Game {
                 this.#input = "";
                 inputDisplay.innerText = this.#input;
         }
+    }
+
+    #createResults() {
+        incorrectAnswers.innerHTML = "";
+        let list = document.createElement("ul");
+        for (const incorrect of this.#incorrectKana) {
+            if (list.childElementCount === 6) {
+                incorrectAnswers.appendChild(list);
+                list = document.createElement("ul");
+            }
+            const listItem = document.createElement("li");
+            let romanization = this.#romanizationMap.get(incorrect);
+            romanization = typeof(romanization) === "string"
+                ? romanization
+                : romanization.join(", ");
+            listItem.innerText = `${incorrect}: ${romanization}`;
+            list.appendChild(listItem);
+        }
+        incorrectAnswers.appendChild(list);
     }
 
     #kanaList;
