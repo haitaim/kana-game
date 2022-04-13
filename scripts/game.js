@@ -52,12 +52,12 @@ function fadeInOut(fadeOutElement, fadeInElement) {
 }
 
 const kanaDisplay = document.getElementById("kana-display");
-const mainGame = document.getElementById("main");
+const gameElement = document.getElementById("main");
 const inputPrompt = document.getElementById("prompt");
 const inputDisplay = document.getElementById("input");
 const results = document.getElementById("results");
 const incorrectAnswers = document.getElementById("incorrect-answers");
-const newGameButton = document.getElementById("new-game");
+const resetButton = document.getElementById("reset");
 
 class Game {
     constructor(gameSettings) {
@@ -83,8 +83,8 @@ class Game {
 
     viewResults() {
         this.#createResults();
-        fadeInOut(mainGame, results);
-        newGameButton.removeAttribute("disabled");
+        fadeInOut(gameElement, results);
+        resetButton.removeAttribute("disabled");
     }
 
     #processInput() {

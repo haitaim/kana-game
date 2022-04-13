@@ -99,7 +99,7 @@ h2 {
     text-align: revert;
 }
 
-#new-game {
+#reset {
     all: unset;
     cursor: pointer;
     padding: 0.5em;
@@ -112,6 +112,6 @@ h2 {
     transition: background-color 0.3s;
 }
 
-#new-game:hover {
+#reset:hover {
     background-color: lavender;
 }

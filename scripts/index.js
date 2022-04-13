@@ -57,10 +57,10 @@ document.getElementById("number-settings").addEventListener("change", event => {
     settings.numberOfKana = parseInt(event.target.value, 10);
 });
 
-newGameButton.addEventListener("click", () => {
-    newGameButton.blur();
-    newGameButton.setAttribute("disabled", "");
-    fadeInOut(results, mainGame);
+resetButton.addEventListener("click", () => {
+    resetButton.blur();
+    resetButton.setAttribute("disabled", "");
+    fadeInOut(results, gameElement);
     game = new Game(settings);
     game.start();
 });
@@ -68,8 +68,8 @@ newGameButton.addEventListener("click", () => {
 document.getElementById("settings").addEventListener("change", () => {
     game.end();
     game = new Game(settings);
-    const fadeOutElement = mainGame.classList.contains("visible") ? mainGame : results;
-    fadeInOut(fadeOutElement, mainGame);
+    const fadeOutElement = gameElement.classList.contains("visible") ? gameElement : results;
+    fadeInOut(fadeOutElement, gameElement);
     function startGame() {
         game.start()
         fadeOutElement.removeEventListener("transitionend", startGame);
