@@ -65,14 +65,20 @@ resetButton.addEventListener("click", () => {
     game.start();
 });
 
+const radioButtons = Array.from(document.getElementsByTagName("input"));
 document.getElementById("settings").addEventListener("change", () => {
     game.end();
+    radioButtons.forEach(radioButton => { radioButton.setAttribute("disabled", ""); });
     game = new Game(settings);
     const fadeOutElement = gameElement.classList.contains("visible") ? gameElement : results;
     fadeInOut(fadeOutElement, gameElement);
     function startGame() {
         game.start()
         fadeOutElement.removeEventListener("transitionend", startGame);
+        function enableRadioInput() {
+            radioButtons.forEach(radioButton => { radioButton.removeAttribute("disabled"); });
+        }
+        setTimeout(enableRadioInput, 100);
     }
     fadeOutElement.addEventListener("transitionend", startGame);
 });
