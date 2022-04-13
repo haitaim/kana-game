@@ -65,8 +65,9 @@ resetButton.addEventListener("click", () => {
     game.start();
 });
 
-const radioButtons = Array.from(document.getElementsByTagName("input"));
-document.getElementById("settings").addEventListener("change", () => {
+const settingsElement = document.getElementById("settings");
+const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
+settingsElement.addEventListener("change", () => {
     game.end();
     radioButtons.forEach(radioButton => { radioButton.setAttribute("disabled", ""); });
     game = new Game(settings);
