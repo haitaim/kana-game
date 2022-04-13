@@ -68,10 +68,11 @@ newGameButton.addEventListener("click", () => {
 document.getElementById("settings").addEventListener("change", () => {
     game.end();
     game = new Game(settings);
-    fadeInOut(mainGame, mainGame);
+    const fadeOutElement = mainGame.classList.contains("visible") ? mainGame : results;
+    fadeInOut(fadeOutElement, mainGame);
     function startGame() {
         game.start()
-        mainGame.removeEventListener("transitionend", startGame);
+        fadeOutElement.removeEventListener("transitionend", startGame);
     }
-    mainGame.addEventListener("transitionend", startGame);
+    fadeOutElement.addEventListener("transitionend", startGame);
 });
