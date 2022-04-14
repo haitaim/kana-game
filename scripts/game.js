@@ -162,13 +162,3 @@ class Game {
         }
     };
 }
-
-class GameSettings {
-    constructor(selectedKana, numberOfKana) {
-        this.selectedKana = selectedKana;
-        this.numberOfKana = numberOfKana;
-    }
-
-    selectedKana;
-    numberOfKana;
-}

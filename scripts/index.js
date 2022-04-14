@@ -23,7 +23,7 @@ function storageAvailable() {
     }
 }
 
-const settings = new GameSettings(hiragana, 46);
+const settings = { selectedKana: hiragana, numberOfKana: 46 };
 const hasSessionStorage = storageAvailable();
 if (hasSessionStorage) {
     const kanaSaved = sessionStorage.getItem("kanaSetting");
