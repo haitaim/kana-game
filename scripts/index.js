@@ -65,6 +65,19 @@ resetButton.addEventListener("click", () => {
     game.start();
 });
 
+document.addEventListener("keydown", event => {
+    if (event.key === "Enter" && results.classList.contains("visible")) {
+        game = new Game(settings);
+        resetButton.setAttribute("disabled", "");
+        fadeInOut(results ,gameElement);
+        function startGame() {
+            game.start()
+            results.removeEventListener("transitionend", startGame);
+        }
+        results.addEventListener("transitionend", startGame);
+    }
+});
+
 const settingsElement = document.getElementById("settings");
 const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
 settingsElement.addEventListener("change", () => {

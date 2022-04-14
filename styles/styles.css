@@ -23,7 +23,7 @@ h3 {
 
 #game {
     position: relative;
-    margin: 2.5rem 0;
+    margin: 2.5rem 0 2.25rem 0;
 }
 
 #main, #results {
@@ -109,6 +109,7 @@ h3 {
     all: unset;
     cursor: pointer;
     padding: 0.6em;
+    margin-bottom: 0.25em;
     background-color: #ccccff;
     border-radius: 10px;
     font-size: 1.2rem;
