@@ -11,14 +11,19 @@ h1 {
 }
 
 h2 {
+    font-size: 1.75rem;
     text-align: center;
+}
+
+h3 {
+    font-size: 1.25rem;
 }
 
 /* !! game */
 
 #game {
     position: relative;
-    margin-bottom: 4rem;
+    margin: 2.5rem 0;
 }
 
 #main, #results {
@@ -39,23 +44,24 @@ h2 {
 
 #kana-display {
     position: absolute;
-    width: 8rem;
-    height: 8rem;
+    width: 10rem;
+    height: 10rem;
     border-radius: 10px;
-    left: calc(50vw - 4rem);
-    font-size: 5.5rem;
+    top: 1.5rem;
+    left: calc(50% - 5rem);
+    font-size: 7rem;
     text-align: center;
-    line-height: 8rem;
-    background-color: gainsboro;
+    line-height: 10rem;
+    background-color: #ccccff;
 }
 
 #key-display > div {
     position: absolute;
-    width: 10rem;
+    width: 20rem;
     font-size: 2.5rem;
     text-align: center;
-    top: 9rem;
-    left: calc(50vw - 5rem);
+    top: 13.25rem;
+    left: calc(50% - 10rem);
 }
 
 /* !! key input */
@@ -88,24 +94,24 @@ h2 {
 #incorrect-answers {
     display: flex;
     justify-content: center;
-    height: 8em;
-    font-size: 1.1rem;
+    height: 10em;
+    font-size: 1.3rem;
 }
 
 #incorrect-answers ul {
     margin: 0 1.25em;
     padding-left: 0;
     list-style-type: none;
-    text-align: revert;
+    text-align: left;
 }
 
 #reset {
     all: unset;
     cursor: pointer;
-    padding: 0.5em;
-    background-color: gainsboro;
+    padding: 0.6em;
+    background-color: #ccccff;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-family: inherit;
     -webkit-user-select: none;
     user-select: none;
@@ -113,5 +119,7 @@ h2 {
 }
 
 #reset:hover {
-    background-color: lavender;
+    background-color: #e7e7ff;
 }
+
+/* !! settings */
