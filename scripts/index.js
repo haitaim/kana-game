@@ -67,7 +67,7 @@ const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
 function resetGame(fadeOutElement) {
     resetButton.setAttribute("disabled", "");
     radioButtons.forEach(r => r.setAttribute("disabled", ""));
-    fadeInOut(fadeOutElement, gameElement);
+    fadeToNewElement(fadeOutElement, gameElement);
     game = new Game(settings);
 
     function startInterfaces() {

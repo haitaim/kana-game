@@ -42,7 +42,7 @@ function fadeAnswer(input, isCorrect) {
     keyDisplay.appendChild(inputDiv);
 }
 
-function fadeInOut(fadeOutElement, fadeInElement) {
+function fadeToNewElement(fadeOutElement, fadeInElement) {
     function startFadeIn() {
         fadeInElement.classList.replace("hidden", "visible");
         fadeOutElement.removeEventListener("transitionend", startFadeIn);
@@ -83,7 +83,7 @@ class Game {
 
     viewResults() {
         this.#createResults();
-        fadeInOut(gameElement, results);
+        fadeToNewElement(gameElement, results);
         resetButton.removeAttribute("disabled");
     }
 

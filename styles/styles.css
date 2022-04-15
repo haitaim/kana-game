@@ -44,24 +44,31 @@ h3 {
 
 #kana-display {
     position: absolute;
+
     width: 10rem;
     height: 10rem;
-    border-radius: 10px;
+
     top: 1.5rem;
     left: calc(50% - 5rem);
+
+    background-color: #ccccff;
+    border-radius: 10px;
+
     font-size: 7rem;
     text-align: center;
     line-height: 10rem;
-    background-color: #ccccff;
 }
 
 #key-display > div {
     position: absolute;
+
     width: 20rem;
-    font-size: 2.5rem;
-    text-align: center;
+
     top: 13.25rem;
     left: calc(50% - 10rem);
+
+    font-size: 2.5rem;
+    text-align: center;
 }
 
 /* !! key input */
@@ -101,21 +108,26 @@ h3 {
 #incorrect-answers ul {
     margin: 0 1.25em;
     padding-left: 0;
-    list-style-type: none;
     text-align: left;
+    list-style-type: none;
 }
 
 #reset {
     all: unset;
-    cursor: pointer;
-    padding: 0.6em;
+
     margin-bottom: 0.25em;
+    padding: 0.6em;
+
     background-color: #ccccff;
     border-radius: 10px;
-    font-size: 1.2rem;
+
     font-family: inherit;
+    font-size: 1.2rem;
+
+    cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
+
     transition: background-color 0.3s;
 }
 
