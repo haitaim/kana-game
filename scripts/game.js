@@ -109,7 +109,7 @@ class Game {
         inputDiv.addEventListener("animationend", event => {
             event.currentTarget.remove();
         });
-        this.#keyDisplay.appendChild(inputDiv);
+        this.#inputDisplay.after(inputDiv);
     }
 
     #kanaList;
@@ -120,7 +120,6 @@ class Game {
     #input = "";
     #incorrectKana = [];
     #kanaDisplay = document.getElementById("kana-display");
-    #keyDisplay = document.getElementById("key-display");
     #inputPrompt = document.getElementById("prompt");
     #inputDisplay = document.getElementById("input");
     #keyProcessor = event => {
