@@ -1,3 +1,4 @@
+// Get web storage
 // From MDN: Using the Web Storage API
 function storageAvailable() {
     let storage = window.sessionStorage;
@@ -40,9 +41,11 @@ const startKana = settings.selectedKana === hiragana ? "hiragana" : "katakana";
 document.querySelector(`input[value="${startKana}"]`).setAttribute("checked", "");
 document.querySelector(`input[value="${settings.numberOfKana}"]`).setAttribute("checked", "");
 
+// Start game
 let game = new Game(settings);
 game.start();
 
+// Change settings
 document.getElementById("kana-settings").addEventListener("change", event => {
     if (hasSessionStorage) {
         sessionStorage.setItem("kanaSetting", event.target.value);
@@ -57,42 +60,40 @@ document.getElementById("number-settings").addEventListener("change", event => {
     settings.numberOfKana = parseInt(event.target.value, 10);
 });
 
+// Reset game
+const settingsElement = document.getElementById("settings");
+const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
+
+function resetGame(fadeOutElement) {
+    resetButton.setAttribute("disabled", "");
+    radioButtons.forEach(r => r.setAttribute("disabled", ""));
+    fadeInOut(fadeOutElement, gameElement);
+    game = new Game(settings);
+
+    function startInterfaces() {
+        game.start();
+        fadeOutElement.removeEventListener("transitionend", startInterfaces);
+        setTimeout(
+            () => radioButtons.forEach(r => r.removeAttribute("disabled")),
+            100
+        );
+    }
+    fadeOutElement.addEventListener("transitionend", startInterfaces);
+}
+
 resetButton.addEventListener("click", () => {
     resetButton.blur();
-    resetButton.setAttribute("disabled", "");
-    fadeInOut(results, gameElement);
-    game = new Game(settings);
-    game.start();
+    resetGame(results);
 });
 
 document.addEventListener("keydown", event => {
     if (event.key === "Enter" && results.classList.contains("visible")) {
-        game = new Game(settings);
-        resetButton.setAttribute("disabled", "");
-        fadeInOut(results ,gameElement);
-        function startGame() {
-            game.start()
-            results.removeEventListener("transitionend", startGame);
-        }
-        results.addEventListener("transitionend", startGame);
+        resetGame(results);
     }
 });
 
-const settingsElement = document.getElementById("settings");
-const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
 settingsElement.addEventListener("change", () => {
     game.end();
-    radioButtons.forEach(radioButton => { radioButton.setAttribute("disabled", ""); });
-    game = new Game(settings);
     const fadeOutElement = gameElement.classList.contains("visible") ? gameElement : results;
-    fadeInOut(fadeOutElement, gameElement);
-    function startGame() {
-        game.start()
-        fadeOutElement.removeEventListener("transitionend", startGame);
-        function enableRadioInput() {
-            radioButtons.forEach(radioButton => { radioButton.removeAttribute("disabled"); });
-        }
-        setTimeout(enableRadioInput, 100);
-    }
-    fadeOutElement.addEventListener("transitionend", startGame);
+    resetGame(fadeOutElement);
 });
