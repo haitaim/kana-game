@@ -28,37 +28,6 @@ function checkInput(input, answer) {
     return "incorrect";
 }
 
-const keyDisplay = document.getElementById("key-display");
-function fadeAnswer(input, isCorrect) {
-    const inputDiv = document.createElement("div");
-    inputDiv.innerText = input;
-    inputDiv.classList.add("previous-input");
-    if (!isCorrect) {
-        inputDiv.classList.add("incorrect");
-    }
-    inputDiv.addEventListener("animationend", event => {
-        event.currentTarget.remove();
-    });
-    keyDisplay.appendChild(inputDiv);
-}
-
-function fadeToNewElement(fadeOutElement, fadeInElement) {
-    function startFadeIn() {
-        fadeInElement.classList.replace("hidden", "visible");
-        fadeOutElement.removeEventListener("transitionend", startFadeIn);
-    }
-    fadeOutElement.addEventListener("transitionend", startFadeIn);
-    fadeOutElement.classList.replace("visible", "hidden");
-}
-
-const kanaDisplay = document.getElementById("kana-display");
-const gameElement = document.getElementById("main");
-const inputPrompt = document.getElementById("prompt");
-const inputDisplay = document.getElementById("input");
-const results = document.getElementById("results");
-const incorrectAnswers = document.getElementById("incorrect-answers");
-const resetButton = document.getElementById("reset");
-
 class Game {
     constructor(gameSettings) {
         let selectedKana = "";
@@ -89,21 +58,15 @@ class Game {
     }
 
     start() {
-        kanaDisplay.innerText = this.#currentKana;
-        inputPrompt.style.visibility = "visible";
+        this.#kanaDisplay.innerText = this.#currentKana;
+        this.#inputPrompt.style.visibility = "visible";
         this.#promptVisible = true;
-        inputDisplay.innerText = "";
+        this.#inputDisplay.innerText = "";
         document.addEventListener("keydown", this.#keyProcessor);
     }
 
     end() {
         document.removeEventListener("keydown", this.#keyProcessor);
-    }
-
-    viewResults() {
-        this.#createResults();
-        fadeToNewElement(gameElement, results);
-        resetButton.removeAttribute("disabled");
     }
 
     #processInput() {
@@ -115,13 +78,14 @@ class Game {
                 ++this.#kanaListIndex;
                 if (this.#kanaListIndex === this.#kanaList.length) {
                     this.end();
-                    this.viewResults();
+                    createResults(this.#incorrectKana, this.#romanizationMap);
+                    viewResults();
                 } else {
                     this.#currentKana = this.#kanaList[this.#kanaListIndex];
-                    kanaDisplay.innerText = this.#currentKana;
-                    fadeAnswer(this.#input, true);
+                    this.#kanaDisplay.innerText = this.#currentKana;
+                    this.#fadeAnswer(true);
                     this.#input = "";
-                    inputDisplay.innerText = this.#input;
+                    this.#inputDisplay.innerText = this.#input;
                 }
                 break;
             case "incorrect":
@@ -129,29 +93,23 @@ class Game {
                 if (!this.#incorrectKana.includes(this.#currentKana)) {
                     this.#incorrectKana.push(this.#currentKana);
                 }
-                fadeAnswer(this.#input, false);
+                this.#fadeAnswer(false);
                 this.#input = "";
-                inputDisplay.innerText = this.#input;
+                this.#inputDisplay.innerText = this.#input;
         }
     }
 
-    #createResults() {
-        incorrectAnswers.innerHTML = "";
-        let list = document.createElement("ul");
-        for (const incorrect of this.#incorrectKana) {
-            if (list.childElementCount === 6) {
-                incorrectAnswers.appendChild(list);
-                list = document.createElement("ul");
-            }
-            const listItem = document.createElement("li");
-            let romanization = this.#romanizationMap.get(incorrect);
-            romanization = typeof(romanization) === "string"
-                ? romanization
-                : romanization.join(", ");
-            listItem.innerText = `${incorrect}: ${romanization}`;
-            list.appendChild(listItem);
+    #fadeAnswer(isCorrect) {
+        const inputDiv = document.createElement("div");
+        inputDiv.innerText = this.#input;
+        inputDiv.classList.add("previous-input");
+        if (!isCorrect) {
+            inputDiv.classList.add("incorrect");
         }
-        incorrectAnswers.appendChild(list);
+        inputDiv.addEventListener("animationend", event => {
+            event.currentTarget.remove();
+        });
+        this.#keyDisplay.appendChild(inputDiv);
     }
 
     #kanaList;
@@ -161,6 +119,10 @@ class Game {
     #kanaListIndex = 0;
     #input = "";
     #incorrectKana = [];
+    #kanaDisplay = document.getElementById("kana-display");
+    #keyDisplay = document.getElementById("key-display");
+    #inputPrompt = document.getElementById("prompt");
+    #inputDisplay = document.getElementById("input");
     #keyProcessor = event => {
         const keyCode = event.key.codePointAt(0);
         const isLowerAlpha = keyCode > 0x60 && keyCode < 0x7b;
@@ -168,16 +130,16 @@ class Game {
         if (isLowerAlpha && !hasModifier && !event.repeat) {
             if (this.#promptVisible) {
                 this.#promptVisible = false;
-                inputPrompt.style.visibility = "hidden";
+                this.#inputPrompt.style.visibility = "hidden";
             }
 
             console.log(`New key: ${event.key}`);
             this.#input += event.key;
-            inputDisplay.innerText = this.#input;
+            this.#inputDisplay.innerText = this.#input;
             this.#processInput();
         } else if (event.key === "Backspace") {
             this.#input = this.#input.substring(0, this.#input.length - 1);
-            inputDisplay.innerText = this.#input;
+            this.#inputDisplay.innerText = this.#input;
         }
     };
 }
