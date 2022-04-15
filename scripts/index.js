@@ -24,12 +24,16 @@ function storageAvailable() {
     }
 }
 
-const settings = { selectedKana: hiragana, numberOfKana: 46 };
+const settings = { selectedKana: hiragana, diacritics: "none", numberOfKana: 46 };
 const hasSessionStorage = storageAvailable();
 if (hasSessionStorage) {
     const kanaSaved = sessionStorage.getItem("kanaSetting");
     if (kanaSaved === "katakana") {
         settings.selectedKana = katakana;
+    }
+    const diacriticsSaved = sessionStorage.getItem("diacriticsSetting");
+    if (diacriticsSaved !== null) {
+        settings.diacritics = diacriticsSaved;
     }
     const numberSaved = sessionStorage.getItem("numberSetting");
     if (numberSaved !== null) {
@@ -40,6 +44,7 @@ if (hasSessionStorage) {
 const startKana = settings.selectedKana === hiragana ? "hiragana" : "katakana";
 document.querySelector(`input[value="${startKana}"]`).setAttribute("checked", "");
 document.querySelector(`input[value="${settings.numberOfKana}"]`).setAttribute("checked", "");
+document.querySelector(`input[value="${settings.diacritics}"]`).setAttribute("checked", "");
 
 // Start game
 let game = new Game(settings);
@@ -51,6 +56,13 @@ document.getElementById("kana-settings").addEventListener("change", event => {
         sessionStorage.setItem("kanaSetting", event.target.value);
     }
     settings.selectedKana = event.target.value === "hiragana" ? hiragana : katakana;
+});
+
+document.getElementById("diacritics-settings").addEventListener("change", event => {
+    if (hasSessionStorage) {
+        sessionStorage.setItem("diacriticsSetting", event.target.value);
+    }
+    settings.diacritics = event.target.value;
 });
 
 document.getElementById("number-settings").addEventListener("change", event => {

@@ -61,9 +61,28 @@ const resetButton = document.getElementById("reset");
 
 class Game {
     constructor(gameSettings) {
-        const selectedKana = gameSettings.selectedKana;
+        let selectedKana = "";
+        let romanization = [];
+        switch (gameSettings.diacritics) {
+            case "separate":
+                selectedKana = gameSettings.selectedKana === hiragana
+                    ? hiraganaDiacritic
+                    : katakanaDiacritic;
+                romanization = diacriticRomanization;
+                break;
+            case "included":
+                selectedKana = gameSettings.selectedKana
+                    .concat(gameSettings.selectedKana === hiragana ? hiraganaDiacritic : katakanaDiacritic);
+                romanization = kanaRomanization.concat(diacriticRomanization);
+                break;
+            case "none":
+            default:
+                selectedKana = gameSettings.selectedKana;
+                romanization = kanaRomanization;
+        }
+
         for (let i = 0; i < selectedKana.length; ++i) {
-            this.#romanizationMap.set(selectedKana[i], kanaRomanization[i]);
+            this.#romanizationMap.set(selectedKana[i], romanization[i]);
         }
         this.#kanaList = shuffleKana(selectedKana).slice(0, gameSettings.numberOfKana);
         this.#currentKana = this.#kanaList[0];

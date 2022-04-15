@@ -14,3 +14,14 @@ const kanaRomanization = [
     "wa", ["o", "wo"],
     "n"
 ];
+
+const hiraganaDiacritic = "がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ";
+const katakanaDiacritic = "ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ";
+
+const diacriticRomanization = [
+    "ga", "gi", "gu", "ge", "go",
+    "za", ["zi", "ji"], "zu", "ze", "zo",
+    "da", ["di", "ji", "zi"], ["du", "zu"], "de", "do",
+    "ba", "bi", "bu", "be", "bo",
+    "pa", "pi", "pu", "pe", "po"
+];
