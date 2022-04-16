@@ -30,31 +30,30 @@ function checkInput(input, answer) {
 
 class Game {
     constructor(gameSettings) {
-        let selectedKana = "";
-        let romanization = [];
-        switch (gameSettings.diacritics) {
-            case "separate":
-                selectedKana = gameSettings.selectedKana === hiragana
-                    ? hiraganaDiacritic
-                    : katakanaDiacritic;
-                romanization = diacriticRomanization;
-                break;
-            case "included":
-                selectedKana = gameSettings.selectedKana
-                    .concat(gameSettings.selectedKana === hiragana ? hiraganaDiacritic : katakanaDiacritic);
-                romanization = kanaRomanization.concat(diacriticRomanization);
-                break;
-            case "none":
-            default:
-                selectedKana = gameSettings.selectedKana;
-                romanization = kanaRomanization;
+        let kana = [hiragana, hiraganaDiacritic, katakana, katakanaDiacritic];
+        if (gameSettings.selectedKana === "hiragana") {
+            kana = kana.filter(k => k === hiragana || k === hiraganaDiacritic);
+        } else if (gameSettings.selectedKana === "katakana") {
+            kana = kana.filter(k => k === katakana || k === katakanaDiacritic);
         }
 
-        for (let i = 0; i < selectedKana.length; ++i) {
-            this.#romanizationMap.set(selectedKana[i], romanization[i]);
+        if (gameSettings.diacritics === "none") {
+            kana = kana.filter(k => k === hiragana || k === katakana);
+        } else if (gameSettings.diacritics === "separate") {
+            kana = kana.filter(k => k === hiraganaDiacritic || k === katakanaDiacritic);
         }
-        this.#kanaList = shuffleKana(selectedKana).slice(0, gameSettings.numberOfKana);
+
+        this.#kanaList = shuffleKana(kana.join('')).slice(0, gameSettings.numberOfKana);
         this.#currentKana = this.#kanaList[0];
+
+        for (const k of kana) {
+            const romanization = k === hiragana || k === katakana
+                ? kanaRomanization
+                : diacriticRomanization;
+            Array.from(k).forEach(
+                (character, i) => this.#romanizationMap.set(character, romanization[i])
+            );
+        }
     }
 
     start() {

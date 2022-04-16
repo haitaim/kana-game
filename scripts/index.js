@@ -24,25 +24,23 @@ function storageAvailable() {
     }
 }
 
-const settings = { selectedKana: hiragana, diacritics: "none", numberOfKana: 46 };
-const hasSessionStorage = storageAvailable();
-if (hasSessionStorage) {
-    const kanaSaved = sessionStorage.getItem("kanaSetting");
-    if (kanaSaved === "katakana") {
-        settings.selectedKana = katakana;
-    }
-    const diacriticsSaved = sessionStorage.getItem("diacriticsSetting");
-    if (diacriticsSaved !== null) {
-        settings.diacritics = diacriticsSaved;
-    }
-    const numberSaved = sessionStorage.getItem("numberSetting");
-    if (numberSaved !== null) {
-        settings.numberOfKana = parseInt(numberSaved, 10);
+function createSettings(hasStorage) {
+    if (hasStorage) {
+        const numberSetting = sessionStorage.getItem("numberSetting");
+        const numberOfKana = numberSetting !== null ? parseInt(numberSetting, 10) : 10;
+        return {
+            selectedKana: sessionStorage.getItem("kanaSetting") ?? "hiragana",
+            diacritics: sessionStorage.getItem("diacriticsSetting") ?? "none",
+            numberOfKana: numberOfKana
+        };
+    } else {
+        return { selectedKana: "hiragana", diacritics: "none", numberOfKana: 0 };
     }
 }
+const hasSessionStorage = storageAvailable();
+const settings = createSettings(hasSessionStorage);
 
-const startKana = settings.selectedKana === hiragana ? "hiragana" : "katakana";
-document.querySelector(`input[value="${startKana}"]`).setAttribute("checked", "");
+document.querySelector(`input[value="${settings.selectedKana}"]`).setAttribute("checked", "");
 document.querySelector(`input[value="${settings.numberOfKana}"]`).setAttribute("checked", "");
 document.querySelector(`input[value="${settings.diacritics}"]`).setAttribute("checked", "");
 
@@ -55,7 +53,7 @@ document.getElementById("kana-settings").addEventListener("change", event => {
     if (hasSessionStorage) {
         sessionStorage.setItem("kanaSetting", event.target.value);
     }
-    settings.selectedKana = event.target.value === "hiragana" ? hiragana : katakana;
+    settings.selectedKana = event.target.value;
 });
 
 document.getElementById("diacritics-settings").addEventListener("change", event => {
