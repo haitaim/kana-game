@@ -27,22 +27,29 @@ function storageAvailable() {
 function createSettings(hasStorage) {
     if (hasStorage) {
         const numberSetting = sessionStorage.getItem("numberSetting");
-        const numberOfKana = numberSetting !== null ? parseInt(numberSetting, 10) : 10;
         return {
             selectedKana: sessionStorage.getItem("kanaSetting") ?? "hiragana",
             diacritics: sessionStorage.getItem("diacriticsSetting") ?? "none",
-            numberOfKana: numberOfKana
+            numberOfKana: numberSetting !== null ? parseInt(numberSetting, 10) : hiragana.length
         };
     } else {
-        return { selectedKana: "hiragana", diacritics: "none", numberOfKana: 0 };
+        return { selectedKana: "hiragana", diacritics: "none", numberOfKana: hiragana.length };
     }
 }
 const hasSessionStorage = storageAvailable();
 const settings = createSettings(hasSessionStorage);
 
-document.querySelector(`input[value="${settings.selectedKana}"]`).setAttribute("checked", "");
-document.querySelector(`input[value="${settings.numberOfKana}"]`).setAttribute("checked", "");
-document.querySelector(`input[value="${settings.diacritics}"]`).setAttribute("checked", "");
+// Set up
+function setUpMaxOption() {
+    const maxKana = calcMaxKana(settings);
+    changeMaxValue(maxKana);
+    hideGreaterThanMax(maxKana);
+}
+setUpMaxOption();
+
+settingsElement.querySelector(`input[value="${settings.selectedKana}"]`).setAttribute("checked", "");
+settingsElement.querySelector(`option[value="${settings.numberOfKana}"]`).setAttribute("selected", "");
+settingsElement.querySelector(`input[value="${settings.diacritics}"]`).setAttribute("checked", "");
 
 // Start game
 let game = new Game(settings);
@@ -54,6 +61,16 @@ document.getElementById("kana-settings").addEventListener("change", event => {
         sessionStorage.setItem("kanaSetting", event.target.value);
     }
     settings.selectedKana = event.target.value;
+    
+    const maxKana = calcMaxKana(settings);
+    if (settings.numberOfKana > maxKana) {
+        settings.numberOfKana = maxKana;
+        document.getElementById("max").setAttribute("selected", "");
+    } else {
+        document.getElementById("max").removeAttribute("selected");
+    }
+    changeMaxValue(maxKana);
+    hideGreaterThanMax(maxKana);
 });
 
 document.getElementById("diacritics-settings").addEventListener("change", event => {
@@ -61,6 +78,16 @@ document.getElementById("diacritics-settings").addEventListener("change", event 
         sessionStorage.setItem("diacriticsSetting", event.target.value);
     }
     settings.diacritics = event.target.value;
+
+    const maxKana = calcMaxKana(settings);
+    if (settings.numberOfKana > maxKana) {
+        settings.numberOfKana = maxKana;
+        document.getElementById("max").setAttribute("selected", "");
+    } else {
+        document.getElementById("max").removeAttribute("selected");
+    }
+    changeMaxValue(maxKana);
+    hideGreaterThanMax(maxKana);
 });
 
 document.getElementById("number-settings").addEventListener("change", event => {

@@ -6,6 +6,7 @@
     <script src="scripts/kana.js" defer></script>
     <script src="scripts/element.js" defer></script>
     <script src="scripts/game.js" defer></script>
+    <script src="scripts/numberselect.js" defer></script>
     <script src="scripts/index.js" defer></script>
     <link href="styles/styles.css" rel="stylesheet">
     <title>Kana Game Thing</title>
@@ -56,17 +57,16 @@
                 <input type="radio" name="diacritics" value="included" autocomplete="off">Included
             </label>
         </section>
-        <section id="number-settings">
+        <section>
             <h3>Number of Kana</h3>
-            <label>
-                <input type="radio" name="kana-number" value="10" autocomplete="off">10
-            </label>
-            <label>
-                <input type="radio" name="kana-number" value="20" autocomplete="off">20
-            </label>
-            <label>
-                <input type="radio" name="kana-number" value="46" autocomplete="off">Max (46)
-            </label>
+            <select id="number-settings">
+                <option value="46" id="max">Max (46)</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+                <option value="60">60</option>
+                <option value="100">100</option>
+            </select>
         </section>
     </section>
 </main>
