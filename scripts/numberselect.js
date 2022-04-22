@@ -1,10 +1,15 @@
 function calcMaxKana(gameSettings) {
     let max = 0;
     switch (gameSettings.diacritics) {
-        case "separate": max = hiraganaDiacritic.length; break;
-        case "included": max = hiragana.length + hiraganaDiacritic.length; break;
+        case "separate":
+            max = hiraganaDiacritic.length;
+            break;
+        case "included":
+            max = hiragana.length + hiraganaDiacritic.length;
+            break;
         default:
-        case "none": max = hiragana.length; break;
+        case "none": 
+            max = hiragana.length;
     }
 
     if (gameSettings.selectedKana === "both") {

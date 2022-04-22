@@ -22,13 +22,11 @@ function modifyNumSelect() {
 
 document.getElementById("kana-settings").addEventListener("change", event => {
     settings.selectedKana = event.target.value;
-    
     modifyNumSelect();
 });
 
 document.getElementById("diacritics-settings").addEventListener("change", event => {
     settings.diacritics = event.target.value;
-
     modifyNumSelect();
 });
 

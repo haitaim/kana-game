@@ -132,7 +132,6 @@ class Game {
                 this.#inputPrompt.style.visibility = "hidden";
             }
 
-            console.log(`New key: ${event.key}`);
             this.#input += event.key;
             this.#inputDisplay.innerText = this.#input;
             this.#processInput();
