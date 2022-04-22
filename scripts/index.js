@@ -5,9 +5,12 @@ game.start();
 // Change settings
 function modifyNumSelect() {
     function clampSelection() {
+        const maxOption = document.getElementById("max");
         if (settings.numberOfKana > maxKana) {
             settings.numberOfKana = maxKana;
-            document.getElementById("max").selected = true;
+            maxOption.selected = true;
+        } else if (maxOption.selected) {
+            settings.numberOfKana = maxKana;
         }
     }
 
