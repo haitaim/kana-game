@@ -17,11 +17,7 @@ function calcMaxKana(gameSettings) {
 function hideGreaterThanMax(maxKana) {
     const numberOptions = Array.from(settingsElement.getElementsByTagName("option")).slice(1);
     for (const option of numberOptions) {
-        if (parseInt(option.value, 10) > maxKana) {
-            option.setAttribute("hidden", "");
-        } else {
-            option.removeAttribute("hidden");
-        }
+        option.disabled = parseInt(option.value, 10) > maxKana;
     }
 }
 
