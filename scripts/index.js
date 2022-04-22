@@ -3,28 +3,30 @@ let game = new Game(settings);
 game.start();
 
 // Change settings
+function modifyNumSelect() {
+    function clampSelection() {
+        if (settings.numberOfKana > maxKana) {
+            settings.numberOfKana = maxKana;
+            document.getElementById("max").selected = true;
+        }
+    }
+
+    const maxKana = calcMaxKana(settings);
+    clampSelection();
+    changeMaxValue(maxKana);
+    hideGreaterThanMax(maxKana);
+}
+
 document.getElementById("kana-settings").addEventListener("change", event => {
     settings.selectedKana = event.target.value;
     
-    const maxKana = calcMaxKana(settings);
-    if (settings.numberOfKana > maxKana) {
-        settings.numberOfKana = maxKana;
-        document.getElementById("max").selected = true;
-    }
-    changeMaxValue(maxKana);
-    hideGreaterThanMax(maxKana);
+    modifyNumSelect();
 });
 
 document.getElementById("diacritics-settings").addEventListener("change", event => {
     settings.diacritics = event.target.value;
 
-    const maxKana = calcMaxKana(settings);
-    if (settings.numberOfKana > maxKana) {
-        settings.numberOfKana = maxKana;
-        document.getElementById("max").selected = true;
-    }
-    changeMaxValue(maxKana);
-    hideGreaterThanMax(maxKana);
+    modifyNumSelect();
 });
 
 document.getElementById("number-settings").addEventListener("change", event => {
