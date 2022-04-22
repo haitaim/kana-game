@@ -57,6 +57,7 @@ class Game {
     }
 
     start() {
+        removeResults();
         this.#kanaDisplay.innerText = this.#currentKana;
         this.#inputPrompt.style.visibility = "visible";
         this.#promptVisible = true;

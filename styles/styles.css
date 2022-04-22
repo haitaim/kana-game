@@ -100,8 +100,11 @@ h3 {
 
 #incorrect-answers {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    height: 10em;
+
+    min-height: 10em;
+
     font-size: 1.3rem;
 }
 

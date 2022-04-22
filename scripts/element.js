@@ -40,6 +40,10 @@ function createResults(incorrectKana, romanizationMap) {
     incorrectAnswers.appendChild(list);
 }
 
+function removeResults() {
+    incorrectAnswers.innerHTML = "";
+}
+
 function viewResults() {
     fadeToNewElement(gameElement, results);   
     resetButton.disabled = false;
