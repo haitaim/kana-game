@@ -6,7 +6,7 @@ const settingsElement = document.getElementById("settings");
 const settingsOptions = Array.from(settingsElement.getElementsByTagName("input"))
     .concat(document.getElementById("number-settings"));
 
-function fadeToNewElement(fadeOutElement, fadeInElement) {
+function fadeToElement(fadeOutElement, fadeInElement) {
     settingsOptions.forEach(r => r.disabled = true);
     function startFadeIn() {
         fadeInElement.classList.replace("hidden", "visible");
@@ -45,6 +45,6 @@ function removeResults() {
 }
 
 function viewResults() {
-    fadeToNewElement(gameElement, results);   
+    fadeToElement(gameElement, results);   
     resetButton.disabled = false;
 }
