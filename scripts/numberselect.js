@@ -15,7 +15,7 @@ function calcMaxKana(gameSettings) {
 }
 
 function hideGreaterThanMax(maxKana) {
-    const numberOptions = Array.from(settingsElement.getElementsByTagName("option")).slice(1);
+    const numberOptions = Array.from(document.getElementById("number-settings").options).slice(1);
     for (const option of numberOptions) {
         option.disabled = parseInt(option.value, 10) > maxKana;
     }
