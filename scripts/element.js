@@ -7,12 +7,12 @@ const settingsOptions = Array.from(settingsElement.getElementsByTagName("input")
     .concat(document.getElementById("number-settings"));
 
 function fadeToNewElement(fadeOutElement, fadeInElement) {
-    settingsOptions.forEach(r => r.setAttribute("disabled", ""));
+    settingsOptions.forEach(r => r.disabled = true);
     function startFadeIn() {
         fadeInElement.classList.replace("hidden", "visible");
         fadeOutElement.removeEventListener("transitionend", startFadeIn);
         setTimeout(
-            () => settingsOptions.forEach(r => r.removeAttribute("disabled")),
+            () => settingsOptions.forEach(r => r.disabled = false),
             100
         );
     }
@@ -42,5 +42,5 @@ function createResults(incorrectKana, romanizationMap) {
 
 function viewResults() {
     fadeToNewElement(gameElement, results);   
-    resetButton.removeAttribute("disabled");
+    resetButton.disabled = false;
 }

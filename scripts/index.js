@@ -33,7 +33,7 @@ document.getElementById("number-settings").addEventListener("change", event => {
 
 // Reset game
 function resetGame(fadeOutElement) {
-    resetButton.setAttribute("disabled", "");
+    resetButton.disabled = true;
     fadeToNewElement(fadeOutElement, gameElement);
     game = new Game(settings);
 
