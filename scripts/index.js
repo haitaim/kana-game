@@ -9,9 +9,7 @@ document.getElementById("kana-settings").addEventListener("change", event => {
     const maxKana = calcMaxKana(settings);
     if (settings.numberOfKana > maxKana) {
         settings.numberOfKana = maxKana;
-        document.getElementById("max").setAttribute("selected", "");
-    } else {
-        document.getElementById("max").removeAttribute("selected");
+        document.getElementById("max").selected = true;
     }
     changeMaxValue(maxKana);
     hideGreaterThanMax(maxKana);
@@ -23,9 +21,7 @@ document.getElementById("diacritics-settings").addEventListener("change", event 
     const maxKana = calcMaxKana(settings);
     if (settings.numberOfKana > maxKana) {
         settings.numberOfKana = maxKana;
-        document.getElementById("max").setAttribute("selected", "");
-    } else {
-        document.getElementById("max").removeAttribute("selected");
+        document.getElementById("max").selected = true;
     }
     changeMaxValue(maxKana);
     hideGreaterThanMax(maxKana);
