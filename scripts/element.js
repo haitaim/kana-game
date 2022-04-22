@@ -23,21 +23,24 @@ function fadeToElement(fadeOutElement, fadeInElement) {
 
 function createResults(incorrectKana, romanizationMap) {
     incorrectAnswers.innerHTML = "";
-    let list = document.createElement("ul");
-    for (const incorrect of incorrectKana) {
-        if (list.childElementCount === 6) {
-            incorrectAnswers.appendChild(list);
-            list = document.createElement("ul");
-        }
+
+    incorrectKana.sort();
+    
+    function createListItem(kana) {
         const listItem = document.createElement("li");
-        let romanization = romanizationMap.get(incorrect);
-        romanization = typeof(romanization) === "string"
-            ? romanization
-            : romanization.join(", ");
-        listItem.innerText = `${incorrect}: ${romanization}`;
-        list.appendChild(listItem);
+        let romanization = romanizationMap.get(kana);
+        if (typeof(romanization) === "object") {
+            romanization = romanization.join(", ");
+        }
+        listItem.innerText = `${kana}: ${romanization}`;
+        return listItem;
     }
-    incorrectAnswers.appendChild(list);
+    
+    for (let i = 0; i < incorrectKana.length; i +=6) {
+        const list = document.createElement("ul");
+        incorrectKana.slice(i, i + 6).forEach(kana => list.appendChild(createListItem(kana)));
+        incorrectAnswers.appendChild(list);
+    }
 }
 
 function removeResults() {
