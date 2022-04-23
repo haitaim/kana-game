@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "BIZ UDPGothic";
+    src: local(BIZ UDPGothic),
+        local(BIZUDPGothic),
+        url(BIZUDPGothic/BIZUDPGothic-Regular.subset.woff2) format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "BIZ UDPGothic";
+    src: local(BIZ UDPGothic Bold),
+        local(BIZUDPGothic-Bold),
+        url(BIZUDPGothic/BIZUDPGothic-Bold.subset.woff2) format("woff2");
+    font-weight: 700;
+}
