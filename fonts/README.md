@@ -10,6 +10,6 @@ The subset contains:
 - A majority of the hiragana block (U+3042-308F, U+3092-3093)
 - A majority of the katakana block (U+30A2-30EF, U+30F2-30F3)
 
-[^1] [Morisawa BIZ UDGothic: Project repository][1]
+[^1]: [Morisawa BIZ UDGothic: Project repository][1]
 
 [1]: https://github.com/googlefonts/morisawa-biz-ud-gothic
