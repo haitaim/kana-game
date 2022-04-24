@@ -9,7 +9,7 @@ function modifyNumSelect() {
         if (settings.numberOfKana > maxKana) {
             settings.numberOfKana = maxKana;
             maxOption.checked = true;
-        } else if (maxOption.selected) {
+        } else if (maxOption.checked) {
             settings.numberOfKana = maxKana;
         }
     }
