@@ -169,8 +169,11 @@ footer {
     margin: 0.5rem;
 }
 
-.option {
+#settings section > div {
     margin: 0.25em 1em;
     font-size: 1.1rem;
 }
 
+input:disabled + span {
+    opacity: 0.5;
+}

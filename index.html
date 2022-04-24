@@ -37,17 +37,17 @@
         <div id="settings-row">
             <section id="kana-settings">
                 <h3>Kana</h3>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="kana" value="hiragana" autocomplete="off" checked>Hiragana
                     </label>
                 </div>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="kana" value="katakana" autocomplete="off">Katakana
                     </label>
                 </div>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="kana" value="both" autocomplete="off">Both
                     </label>
@@ -55,34 +55,53 @@
             </section>
             <section id="diacritics-settings">
                 <h3>Dakuten and handakuten</h3>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="diacritics" value="none" autocomplete="off" checked>None
                     </label>
                 </div>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="diacritics" value="separate" autocomplete="off">By itself
                     </label>
                 </div>
-                <div class="option">
+                <div>
                     <label>
                         <input type="radio" name="diacritics" value="included" autocomplete="off">Included
                     </label>
                 </div>
             </section>
-            <section>
+            <section id="number-settings">
                 <h3>Number of Kana</h3>
-                <div class="option">
-                    <label for="number-settings">Number:</label>
-                    <select id="number-settings">
-                        <option value="46" id="max" selected>Max (46)</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="40">40</option>
-                        <option value="60" disabled>60</option>
-                        <option value="100" disabled>100</option>
-                    </select>
+                <div>
+                    <label>
+                        <input id="max" type="radio" name="number" value="46" autocomplete="off" checked>Max (<span id="max-number">46</span>)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="number" value="10" autocomplete="off"><span>10</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="number" value="20" autocomplete="off"><span>20</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="number" value="40" autocomplete="off"><span>40</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="number" value="60" autocomplete="off" disabled><span>60</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="number" value="100" autocomplete="off" disabled><span>100</span>
+                    </label>
                 </div>
             </section>
         </div>

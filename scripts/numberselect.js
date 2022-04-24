@@ -20,7 +20,7 @@ function calcMaxKana(gameSettings) {
 }
 
 function hideGreaterThanMax(maxKana) {
-    const numberOptions = Array.from(document.getElementById("number-settings").options).slice(1);
+    const numberOptions = Array.from(document.getElementById("number-settings").getElementsByTagName("input")).slice(1);
     for (const option of numberOptions) {
         option.disabled = parseInt(option.value, 10) > maxKana;
     }
@@ -28,7 +28,6 @@ function hideGreaterThanMax(maxKana) {
 
 function changeMaxValue(maxKana) {
     const maxAsString = maxKana.toString();
-    const maxOption = document.getElementById("max");
-    maxOption.value = maxAsString;
-    maxOption.innerText = `Max (${maxAsString})`;
+    document.getElementById("max").value = maxAsString;
+    document.getElementById("max-number").innerText = maxAsString;
 }

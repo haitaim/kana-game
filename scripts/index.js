@@ -8,7 +8,7 @@ function modifyNumSelect() {
         const maxOption = document.getElementById("max");
         if (settings.numberOfKana > maxKana) {
             settings.numberOfKana = maxKana;
-            maxOption.selected = true;
+            maxOption.checked = true;
         } else if (maxOption.selected) {
             settings.numberOfKana = maxKana;
         }

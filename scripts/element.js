@@ -3,16 +3,16 @@ const results = document.getElementById("results");
 const incorrectAnswers = document.getElementById("incorrect-answers");
 const resetButton = document.getElementById("reset");
 const settingsElement = document.getElementById("settings");
-const settingsOptions = Array.from(settingsElement.getElementsByTagName("input"))
-    .concat(document.getElementById("number-settings"));
+const radioButtons = Array.from(settingsElement.getElementsByTagName("input"));
 
 function fadeToElement(fadeOutElement, fadeInElement) {
-    settingsOptions.forEach(r => r.disabled = true);
+    const disabledButtons = radioButtons.filter(r => r.disabled);
+    radioButtons.forEach(r => r.disabled = true);
     function startFadeIn() {
         fadeInElement.classList.replace("hidden", "visible");
         fadeOutElement.removeEventListener("transitionend", startFadeIn);
         setTimeout(
-            () => settingsOptions.forEach(r => r.disabled = false),
+            () => radioButtons.forEach(r => r.disabled = disabledButtons.includes(r)),
             100
         );
     }
