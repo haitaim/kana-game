@@ -7,6 +7,8 @@ including hiragana, katakana, and kana with diacritics (dakuten ゛ and
 handakuten ゜). Hepburn, Kunrei-shiki, and Nihon-shoki systems of romanization
 are all acceptable when answering.
 
+[You can check out the site here!](https://haitaim.github.io/kana-game)
+
 The site is functional on desktop only.
 
 ## Running Locally
