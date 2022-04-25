@@ -31,6 +31,22 @@ footer {
     text-align: center;
 }
 
+a {
+    all: unset;
+    padding: 0.6rem;
+
+    background-color: #ccccff;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #e7e7ff;
+}
+
 /* !! game */
 
 #game {
